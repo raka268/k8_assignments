@@ -1,0 +1,56 @@
+
+assignment1
+in Rc: kind: ReplicationController and in RS: kind: ReplicaSet and inside selector matchlabels is present
+
+# kubectl apply -f kubia-replicaset.yaml
+replicaset.apps/kubia created
+
+kubectl apply -f <filename>
+kubectl apply -f <filename> -v=xx
+kubectl apply -f <filename> -o name
+kubectl apply -f kubia-manual.yaml -o json
+kubectl apply -f kubia-manual.yaml -o yaml
+
+# kubectl apply -f kubia-svc.yaml
+service/kubia2 created
+# curl 10.99.10.99:80
+You've hit kubia-jbj24
+
+service is not applied to the pods(updated pods) after changing the labels.
+
+
+assignment2
+
+# kubectl apply -f cronjob_orig.yaml
+cronjob.batch/batch-job-every-fifteen-minutes created
+
+# kubectl get cronjobs
+NAME                              SCHEDULE             SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+batch-job-every-fifteen-minutes   0,15,30,45 * * * *   False     0        11m             6h47m
+# kubectl get pods
+NAME                                               READY   STATUS      RESTARTS   AGE
+batch-job-every-fifteen-minutes-1652757300-chv86   0/1     Completed   0          45m
+batch-job-every-fifteen-minutes-1652758200-9w7fg   0/1     Completed   0          29m
+batch-job-every-fifteen-minutes-1652759100-rjcg8   0/1     Completed   0          14m
+kubia-8l2ck                                        1/1     Running     0          33h
+kubia-8rsjt                                        1/1     Running     0          33h
+kubia-pk6s7                                        1/1     Running     0          7h10m
+kubia-xghf8                                        1/1     Running     0          33h
+
+# kubectl get jobs
+NAME                                         COMPLETIONS   DURATION   AGE
+batch-job-every-fifteen-minutes-1652757300   1/1           2m4s       44m
+batch-job-every-fifteen-minutes-1652758200   1/1           2m5s       29m
+batch-job-every-fifteen-minutes-1652759100   1/1           2m4s       14m
+# kubectl get pods
+NAME                                               READY   STATUS      RESTARTS   AGE
+batch-job-every-fifteen-minutes-1652757300-chv86   0/1     Completed   0          45m
+batch-job-every-fifteen-minutes-1652758200-9w7fg   0/1     Completed   0          29m
+batch-job-every-fifteen-minutes-1652759100-rjcg8   0/1     Completed   0          14m
+kubia-8l2ck                                        1/1     Running     0          33h
+kubia-8rsjt                                        1/1     Running     0          33h
+kubia-pk6s7                                        1/1     Running     0          7h10m
+kubia-xghf8                                        1/1     Running     0          33h
+
+
+Normal jobs create the pods and those pods can run only once. Cronjobs also create the pods and the pods run 
